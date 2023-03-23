@@ -1,6 +1,8 @@
 # Supplemental materials for manuscript "Isolating the Impact of Post-Translational Modification on MHC Peptide Binding and TCR Engagement"
 Created on: 3/22/2023
+
 Created by: Nathaniel Bloodworth
+
 This file serves as a key for PTM .params files and rotamer libraries generated for the above manuscript.
 
 ## PTM descriptions, 3-letter codes, and generation method

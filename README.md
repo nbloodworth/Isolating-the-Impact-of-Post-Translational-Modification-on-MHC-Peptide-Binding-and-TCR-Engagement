@@ -57,15 +57,15 @@ graphics software tool to add or remove additional molecules until the side chai
 matches that of the desired PTM. Add additional N-terminus acetylated and C-teminus methylated
 capping groups.
 2. Generate an 3D structure of your PTM amino acid with optimized bond angles and steriochemistry using the BCL molecule:GenerateRosettaNCAAInstructions application
-'''
+```
 $ PATH_TO_BCL/bcl.exe molecule:GenerateRosettaNCAAInstructions \
     -input_filenames PTM_preoptimized.sdf \
     -generate_3D \
     -chirality L_AA \
     -explicit_aromaticity
-'''
+```
 3. Generate a rotamer library using the BCL molecule:ConformerGenerator application
-'''
+```
 $ PATH_TO_BCL/bcl.exe molecule:ConformerGenerator \
     -ensemble_filenames PTM.sdf \
     -conformation_comparer SymmetryRMSD 0.25 \
@@ -74,22 +74,22 @@ $ PATH_TO_BCL/bcl.exe molecule:ConformerGenerator \
     -cluster \
     -explicit_aromaticity \
     -conformers_single_file PTM_rotamers.sdf
-'''
+```
 4. Generate a ROSETTA .params file using molfile_to_params_polymer.py. NOTE: this script is located in PATH_TO_ROSETTA/demos/public/using_ncaas_protein_peptide_interface_design/HowToMakeResidueTypeParamFiles/scripts
-'''
+```
 $ python molfile_to_params_polymer.py \
     -n PTM \
     -p PTM \
     --polymer \
     --no-pdb \
     PTM_rotamers.sdf
-'''
+```
 5. Convert PTM_rotamers.sdf to PDB format using obabel or similar program
 6. Rename heavy atoms in PTM_rotamers.pdb so they match ROSETTA atom names in PTM.params file
 7. Add the following line to the end of the PTM.params file:
-'''
+```
     PDB_ROTAMERS PTM_rotamers.pdb
-'''
+```
 8. You can now run the ROSETTA FlexPepDock application with the -extra_res and/or -extra_res_fa flags followed by the path to the PTM.params file. Ensure PTM_rotamers.pdb is located in the same path as PTM.params at runtime.
 
 ### Command line implementation of FlexPepDock
@@ -101,7 +101,7 @@ PATH_TO_ROSETTA: path to ROSETTA 3.13 installation /main/source/bin folder
 
 1. Select a template PDB peptide backbone structure based on sequence similarity
 3. Using the ROSETTA Scripts mover SimpleThreadingMover, mutate the template residue to match the desired sequence. Add the PTM with the MutateResidue mover (for PTMs created using custom .params files) or the ModifyVariantType mover (for PTMs created with ROSETTA patch files). Add the H-2Kb MHC-I model alpha1 and alpha2 domains (produced by AlphaFold2, also available at https://alphafold.ebi.ac.uk/entry/P01901) with the AddChain mover. Run the scripted protocol (see Ref (2) for details on using ROSETTA Scripts).
-'''
+```
     Example ROSETTA scripts file (rosettaScriptExample.xml)
     This example adds the custom PTM defined by the ROSETTA .params file PTM.params to the 7th 
     residue of the ova peptide.
@@ -131,9 +131,9 @@ PATH_TO_ROSETTA: path to ROSETTA 3.13 installation /main/source/bin folder
         -ex1 -ex2aro -nstruct 1 \
 
     This command produces the prepacked structure named template_0001.pdb
-'''
+```
 4. Use FlexPepDock to generate 1000 structures, sorting the final decoys by reweighted_sc
-'''
+```
     $ PATH_TO_ROSETTA/FlexPepDocking.linuxgccrelease \
         -in:file:s template_0001.pdb \
         -extra_res_fa PTM.params \
@@ -143,7 +143,7 @@ PATH_TO_ROSETTA: path to ROSETTA 3.13 installation /main/source/bin folder
     This command generates the silent file example.silent. Extract the score data and store in the scorefile example.sc for further processing:
 
     $ grep '^SCORE' example.silent >example.sc
-'''
+```
 
 ## References (also cited in main text)
 1. Brown BP et al. Front Pharmacol. 2022;13: 833099.
